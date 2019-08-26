@@ -26,7 +26,12 @@ class HomeScreen extends React.Component {
       <ScrollView style={styles.container}>
         <View style={styles.category}>
           <View style={styles.ligne1}>
-            <TouchableOpacity style={styles.carreJungle}>
+            <TouchableOpacity
+              style={styles.carreJungle}
+              onPress={() => {
+                this.props.navigation.navigate("Other");
+              }}
+            >
               <ImageBackground
                 source={require("./img-home/lion.png")}
                 resizeMode="contain"
@@ -44,7 +49,14 @@ class HomeScreen extends React.Component {
                 </View>
               </ImageBackground>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.carreCompagnie}>
+            <TouchableOpacity
+              style={styles.carreCompagnie}
+              onPress={() => {
+                this.props.navigation.navigate("Other", {
+                  category: "Compagnie"
+                });
+              }}
+            >
               <ImageBackground
                 source={require("./img-home/cat.png")}
                 resizeMode="contain"
@@ -67,7 +79,14 @@ class HomeScreen extends React.Component {
             </TouchableOpacity>
           </View>
           <View style={styles.ligne2}>
-            <TouchableOpacity style={styles.carreFerme}>
+            <TouchableOpacity
+              style={styles.carreFerme}
+              onPress={() => {
+                this.props.navigation.navigate("Other", {
+                  category: "La Ferme"
+                });
+              }}
+            >
               <ImageBackground
                 source={require("./img-home/pig.png")}
                 style={{ width: "100%", height: "100%" }}
@@ -85,7 +104,14 @@ class HomeScreen extends React.Component {
                 </View>
               </ImageBackground>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.carreForet}>
+            <TouchableOpacity
+              style={styles.carreForet}
+              onPress={() => {
+                this.props.navigation.navigate("Other", {
+                  category: "Les forêts du monde"
+                });
+              }}
+            >
               <ImageBackground
                 source={require("./img-home/hib.png")}
                 resizeMode="contain"
