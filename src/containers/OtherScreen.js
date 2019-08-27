@@ -1,15 +1,10 @@
 import React from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  FlatList,
-  Image,
-  ImageBackground
-} from "react-native";
+import { StyleSheet, Text, View, ImageBackground, Button } from "react-native";
 import axios from "axios";
 import { ScrollView } from "react-native-gesture-handler";
-import Swiper from "react-native-swiper";
+import Swiper from "react-native-deck-swiper";
+// import ViewOverflow from "react-native-view-overflow";
+
 import { AntDesign } from "@expo/vector-icons";
 
 class OtherScreen extends React.Component {
@@ -43,45 +38,54 @@ class OtherScreen extends React.Component {
   render() {
     if (this.state.animals) {
       return (
-        <ScrollView style={{ flex: 1 }}>
-          <View style={styles.container}>
-            <Swiper showsButtons={true}>
-              {this.state.animals &&
-                this.state.animals.map((item, index) => {
-                  return (
-                    <View
-                      key={index}
-                      style={{
-                        flex: 1,
-                        justifyContent: "center",
-                        alignItems: "center",
-                        backgroundColor: "red"
-                      }}
-                    >
-                      {/* <Image
-                        source={{
-                          uri: item.photo
-                        }}
-                        style={{
-                          width: "100%",
-                          height: "100%"
-                        }}
-                      /> */}
-                      <ImageBackground
-                        style={{
-                          width: "100%",
-                          height: "100%"
-                        }}
-                        source={{
-                          uri: item.photo
-                        }}
-                      />
-                    </View>
-                  );
-                })}
-            </Swiper>
-          </View>
-        </ScrollView>
+        // <ScrollView style={{ flex: 1 }}>
+        <View style={styles.container}>
+          <Swiper
+            cards={this.state.animals}
+            renderCard={card => {
+              return (
+                <View
+                  style={{
+                    flex: 1,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    backgroundColor: "red"
+                  }}
+                >
+                  <ImageBackground
+                    style={{
+                      width: "100%",
+                      height: "100%"
+                    }}
+                    resizeMode="cover"
+                    source={{
+                      uri: card.photo
+                    }}
+                  />
+                </View>
+              );
+            }}
+            onSwiped={cardIndex => {
+              console.log(cardIndex);
+            }}
+            onSwipedAll={() => {
+              console.log("onSwipedAll");
+            }}
+            cardIndex={0}
+            backgroundColor={"red"}
+            stackSize={3}
+          >
+            <Button
+              onPress={() => {
+                console.log("oulala");
+              }}
+              title="Press me"
+            >
+              You can press me
+            </Button>
+          </Swiper>
+        </View>
+        // </ScrollView>
       );
     }
     return (

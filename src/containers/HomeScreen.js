@@ -29,7 +29,9 @@ class HomeScreen extends React.Component {
             <TouchableOpacity
               style={styles.carreJungle}
               onPress={() => {
-                this.props.navigation.navigate("Other");
+                this.props.navigation.navigate("Other", {
+                  category: "Jungle"
+                });
               }}
             >
               <ImageBackground
