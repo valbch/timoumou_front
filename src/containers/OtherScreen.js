@@ -1,6 +1,8 @@
 import React from "react";
 // lien doc expo: https://docs.expo.io/versions/latest/sdk/audio/#playing-sounds
 
+import Sounds from "../data/sounds";
+
 import {
   StyleSheet,
   Text,
@@ -34,43 +36,46 @@ class OtherScreen extends React.Component {
   componentDidMount = async () => {
     console.log("categorie  ", this.props.navigation.getParam("category"));
     const response = await axios.get(
-      "http://localhost:3000/animals?category=" +
+      "https://timoumou-back.herokuapp.com/animals?category=" +
         this.props.navigation.getParam("category")
     );
-    // setTimeout(() => {
-    //   var sound = new Sound("cat.mp3", Sound.MAIN_BUNDLE, error => {
-    //     /* ... */
-    //   });
 
-    //   setTimeout(() => {
-    //     sound.play(success => {
-    //       /* ... */
-    //     });
-    //   }, 100);
-    // }, 100);
-    this.setState(
-      {
-        animals: response.data,
-        isLoading: false
-      },
-      () => {
-        // console.log("aloooo 2   ", response.data);
-      }
-    );
+    this.setState({
+      animals: response.data,
+      isLoading: false
+    });
   };
-  playingSound = async argument => {
-    console.log("argument ===>", argument);
+  playingSound = async toto => {
+    console.log("argument ===>", toto);
+    // passer name en minusculte et enlever les accents
+    toto = toto
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase();
+    // {this.state.data &&
+    //   // && = si this.state.data existe alors alors tu map = évite les erreurs
+    //   this.state.data.map((item, index) => {
+    //     // 9 . ajouter un map pour afficher le nom
+    //     return this.state.gender === item.gender ? (
+    //       <p>{item.name}</p>
+    //     ) : // 11. Mettre une condition - si le state gender du titre est le meme
+    //     //que gender de l'api (donc mal ou femelle ou robot) alors affiche le.
+    //     // Sinon n'affiche rien
+    //     null;
+    //   })}
+
     const soundObject = new Audio.Sound();
     try {
-      await soundObject.loadAsync(
-        require("/Users/valerie/Desktop/timoumou/new-timoumou-front/timoumou-front/src/soundmp3/cat.mp3")
-      );
+      await soundObject.loadAsync(Sounds[toto]);
+      // clé dynamique
       await soundObject.playAsync();
     } catch (error) {
       console.log(error.message);
     }
   };
   render = () => {
+    console.log(Sounds);
+
     return (
       <View style={styles.container}>
         <View style={{ height: SCREEN_HEIGHT - 200 }}>
@@ -109,7 +114,7 @@ class OtherScreen extends React.Component {
                       ]}
                     >
                       <TouchableOpacity
-                        onPress={card => this.playingSound(card)}
+                        onPress={() => this.playingSound(card.name)}
                       >
                         <Image
                           source={{ uri: card.photo }}
