@@ -11,6 +11,7 @@ const TabNavigator = createBottomTabNavigator(
   },
   {
     defaultNavigationOptions: ({ navigation }) => ({
+      tabBarVisible: false, // pour supprimer la barre de navigation du bas : accueil et parametre
       tabBarIcon: ({ focused, horizontal, tintColor }) => {
         const { routeName } = navigation.state;
         let iconName;
@@ -44,7 +45,7 @@ TabNavigator.navigationOptions = ({ navigation }) => {
 
   switch (routeName) {
     case "Home":
-      headerTitle = "Les animaux";
+      headerTitle = "Ti Moumou App";
       break;
     case "Settings":
       headerTitle = "Paramètres";
@@ -55,13 +56,15 @@ TabNavigator.navigationOptions = ({ navigation }) => {
 
   return {
     headerTitle: headerTitle,
+
     headerStyle: {
       backgroundColor: "#D8EFF0"
       // font: "Chalkboard SE"
     },
     headerTitleStyle: {
       color: "#484c7f",
-      fontSize: 40
+
+      fontSize: 20
     }
   };
 };

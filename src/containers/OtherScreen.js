@@ -30,7 +30,8 @@ class OtherScreen extends React.Component {
   state = {
     animals: null,
     isLoading: true,
-    finish: false
+    finish: false,
+    isPlaying: false
   };
 
   componentDidMount = async () => {
@@ -45,32 +46,33 @@ class OtherScreen extends React.Component {
       isLoading: false
     });
   };
+  soundObject = new Audio.Sound();
   playingSound = async toto => {
     console.log("argument ===>", toto);
-    // passer name en minusculte et enlever les accents
+    // passer name en minuscule et enlever les accents
     toto = toto
       .normalize("NFD")
       .replace(/[\u0300-\u036f]/g, "")
       .toLowerCase();
-    // {this.state.data &&
-    //   // && = si this.state.data existe alors alors tu map = évite les erreurs
-    //   this.state.data.map((item, index) => {
-    //     // 9 . ajouter un map pour afficher le nom
-    //     return this.state.gender === item.gender ? (
-    //       <p>{item.name}</p>
-    //     ) : // 11. Mettre une condition - si le state gender du titre est le meme
-    //     //que gender de l'api (donc mal ou femelle ou robot) alors affiche le.
-    //     // Sinon n'affiche rien
-    //     null;
-    //   })}
 
-    const soundObject = new Audio.Sound();
-    try {
-      await soundObject.loadAsync(Sounds[toto]);
-      // clé dynamique
-      await soundObject.playAsync();
-    } catch (error) {
-      console.log(error.message);
+    if (!this.state.isPlaying) {
+      this.soundObject.unloadAsync();
+      try {
+        await this.soundObject.loadAsync(Sounds[toto]);
+        // clé dynamique
+        await this.soundObject.playAsync().then(PlaybackStatus => {
+          this.setState({ isPlaying: true }, () => {
+            const duration = PlaybackStatus.durationMillis;
+            setTimeout(() => {
+              this.setState({ isPlaying: false });
+            }, duration);
+          });
+        });
+      } catch (error) {
+        console.log(error.message);
+      }
+    } else {
+      console.log("ça joue déjà !");
     }
   };
   render = () => {
@@ -126,14 +128,14 @@ class OtherScreen extends React.Component {
                           onError={err => console.log(err)}
                         />
                       </TouchableOpacity>
-                      {/* <View>
-                        {/* <Sound /> */}
-                      {/* </View> */}
                     </View>
                   );
                 }}
                 onSwiped={cardIndex => {
                   console.log(cardIndex);
+                  this.soundObject.stopAsync().then(status => {
+                    this.setState({ isPlaying: false });
+                  });
                 }}
                 onSwipedAll={() => {
                   this.setState({ finish: true }, () => {
@@ -144,14 +146,13 @@ class OtherScreen extends React.Component {
                   console.log("onSwipedAll");
                 }}
                 dragEnd={() => {
-                  /* this.setState({ end: true }); */
-                  console.log("dragEnd");
+                  // console.log("dragEnd");
                 }}
                 onSwipedLeft={() => {
-                  console.log("left");
+                  // console.log("left");
                 }}
                 onSwipedRight={() => {
-                  console.log("right");
+                  // console.log("right");
                 }}
                 cardIndex={0}
                 backgroundColor={"#D8EFF0"}

@@ -15,6 +15,7 @@ const AppStack = createStackNavigator({
   Home: HomeScreen,
   Other: OtherScreen
 });
+
 const AuthStack = createStackNavigator({ SignIn: SignInScreen });
 
 export default createAppContainer(

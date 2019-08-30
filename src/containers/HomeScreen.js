@@ -1,10 +1,8 @@
-// mettre les png au centre
-// mettre les 3 photos dans devine l'image
-// retirer l'opacité du texte violet des categories
 // mettre la bonne typo
-// faire des composant/props
+// mettre effet dégradé = https://docs.expo.io/versions/latest/sdk/linear-gradient/
 import React from "react";
 import {
+  ActivityIndicator,
   StyleSheet,
   Button,
   View,
@@ -13,8 +11,21 @@ import {
   Text
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { LinearGradient } from "expo-linear-gradient";
+import * as Font from "expo-font";
 
 class HomeScreen extends React.Component {
+  state = {
+    fontLoaded: false
+  };
+
+  componentDidMount = async () => {
+    await Font.loadAsync({
+      unicorn: require("../../assets/fonts/unicorn.ttf")
+    });
+    this.setState({ fontLoaded: true });
+  };
+
   static navigationOptions = ({ navigation }) => {
     return {
       tabBarLabel: "Accueil"
@@ -23,144 +34,144 @@ class HomeScreen extends React.Component {
 
   render() {
     return (
-      <ScrollView style={styles.container}>
-        <View style={styles.category}>
-          <View style={styles.ligne1}>
-            <TouchableOpacity
-              style={styles.carreJungle}
-              onPress={() => {
-                this.props.navigation.navigate("Other", {
-                  category: "Jungle"
-                });
-              }}
-            >
-              <ImageBackground
-                source={require("./img-home/lion.png")}
-                resizeMode="contain"
-                style={{ width: "100%", height: "100%", resizeMode: "center" }}
-              >
-                <View style={styles.rectanglesBlanc}>
-                  <Text
-                    style={{
-                      color: "#383b60",
-                      fontSize: 20
-                    }}
-                  >
-                    Jungle
-                  </Text>
-                </View>
-              </ImageBackground>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.carreCompagnie}
-              onPress={() => {
-                this.props.navigation.navigate("Other", {
-                  category: "Compagnie"
-                });
-              }}
-            >
-              <ImageBackground
-                source={require("./img-home/cat.png")}
-                resizeMode="contain"
-                style={{
-                  width: "100%",
-                  height: "100%"
-                }}
-              >
-                <View style={styles.rectanglesBlanc}>
-                  <Text
-                    style={{
-                      color: "#383b60",
-                      fontSize: 20
-                    }}
-                  >
-                    Compagnie
-                  </Text>
-                </View>
-              </ImageBackground>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.ligne2}>
-            <TouchableOpacity
-              style={styles.carreFerme}
-              onPress={() => {
-                this.props.navigation.navigate("Other", {
-                  category: "La Ferme"
-                });
-              }}
-            >
-              <ImageBackground
-                source={require("./img-home/pig.png")}
-                style={{ width: "100%", height: "100%" }}
-                resizeMode="contain"
-              >
-                <View style={styles.rectanglesBlanc}>
-                  <Text
-                    style={{
-                      color: "#383b60",
-                      fontSize: 20
-                    }}
-                  >
-                    Ferme
-                  </Text>
-                </View>
-              </ImageBackground>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.carreForet}
-              onPress={() => {
-                this.props.navigation.navigate("Other", {
-                  category: "Les forêts du monde"
-                });
-              }}
-            >
-              <ImageBackground
-                source={require("./img-home/hib.png")}
-                resizeMode="contain"
-                style={{ width: "100%", height: "100%", resizeMode: "cover" }}
-              >
-                <View style={styles.rectanglesBlanc}>
-                  <Text
-                    style={{
-                      color: "#383b60",
-                      fontSize: 20
-                    }}
-                  >
-                    Forêt
-                  </Text>
-                </View>
-              </ImageBackground>
-            </TouchableOpacity>
-          </View>
-        </View>
-        <View style={styles.ligne3}>
-          <TouchableOpacity style={styles.rectangle}>
-            <ImageBackground
-              source={require("./img-home/img-devine/coin.png")}
-              resizeMode="contain"
+      <View style={styles.container}>
+        {this.state.fontLoaded ? (
+          <>
+            <Text
               style={{
-                width: "100%",
-                height: "100%"
+                // flexDirection: "row",
+                color: "#484c7f",
+                fontSize: 80,
+                textAlign: "center",
+                justifyContent: "center",
+                marginTop: 70,
+                fontFamily: "unicorn"
               }}
             >
-              <View style={styles.rectanglesBlancDevine}>
-                <Text
-                  style={{
-                    color: "#383b60",
-                    fontSize: 20
+              Les animaux
+            </Text>
+            <View style={styles.category}>
+              <View style={styles.ligne1}>
+                <TouchableOpacity
+                  style={styles.carreJungle}
+                  onPress={() => {
+                    this.props.navigation.navigate("Other", {
+                      category: "Jungle"
+                    });
                   }}
                 >
-                  Devine l'image
-                </Text>
+                  <ImageBackground
+                    source={require("./img-home/lion.png")}
+                    resizeMode="contain"
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      resizeMode: "center"
+                    }}
+                  >
+                    <View style={styles.rectanglesBlanc}>
+                      <Text
+                        style={{
+                          color: "#383b60",
+                          fontSize: 20
+                        }}
+                      >
+                        Jungle
+                      </Text>
+                    </View>
+                  </ImageBackground>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.carreCompagnie}
+                  onPress={() => {
+                    this.props.navigation.navigate("Other", {
+                      category: "Compagnie"
+                    });
+                  }}
+                >
+                  <ImageBackground
+                    source={require("./img-home/cat.png")}
+                    resizeMode="contain"
+                    style={{
+                      width: "100%",
+                      height: "100%"
+                    }}
+                  >
+                    <View style={styles.rectanglesBlanc}>
+                      <Text
+                        style={{
+                          color: "#383b60",
+                          fontSize: 20
+                        }}
+                      >
+                        Compagnie
+                      </Text>
+                    </View>
+                  </ImageBackground>
+                </TouchableOpacity>
               </View>
-            </ImageBackground>
-          </TouchableOpacity>
-        </View>
-
-        {/* <View>
-          <Button title="Aller sur une autre page" onPress={this.showMoreApp} />
-        </View> */}
-      </ScrollView>
+              <View style={styles.ligne2}>
+                <TouchableOpacity
+                  style={styles.carreFerme}
+                  onPress={() => {
+                    this.props.navigation.navigate("Other", {
+                      category: "La Ferme"
+                    });
+                  }}
+                >
+                  <ImageBackground
+                    source={require("./img-home/pig.png")}
+                    style={{ width: "100%", height: "100%" }}
+                    resizeMode="contain"
+                  >
+                    <View style={styles.rectanglesBlanc}>
+                      <Text
+                        style={{
+                          color: "#383b60",
+                          fontSize: 20
+                        }}
+                      >
+                        Ferme
+                      </Text>
+                    </View>
+                  </ImageBackground>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.carreForet}
+                  onPress={() => {
+                    this.props.navigation.navigate("Other", {
+                      category: "Les forêts du monde"
+                    });
+                  }}
+                >
+                  <ImageBackground
+                    source={require("./img-home/hib.png")}
+                    resizeMode="contain"
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      resizeMode: "cover"
+                    }}
+                  >
+                    <View style={styles.rectanglesBlanc}>
+                      <Text
+                        style={{
+                          color: "#383b60",
+                          fontSize: 20
+                        }}
+                      >
+                        Forêt
+                      </Text>
+                    </View>
+                  </ImageBackground>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </>
+        ) : (
+          <ActivityIndicator size="large" color="#0000ff" />
+        )}
+      </View>
     );
   }
 
@@ -174,8 +185,11 @@ const styles = StyleSheet.create({
     backgroundColor: "#D8EFF0"
   },
   category: {
-    flex: 2,
-    marginTop: 20
+    flex: 1,
+    // flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center"
+    // marginTop: 20
   },
 
   carreJungle: {
@@ -209,6 +223,7 @@ const styles = StyleSheet.create({
   ligne1: {
     // backgroundColor: "green",
     flexDirection: "row"
+
     // justifyContent: "space-between"
   },
   ligne2: {
@@ -216,10 +231,10 @@ const styles = StyleSheet.create({
     flexDirection: "row"
     // justifyContent: "space-between"
   },
-  ligne3: {
-    // backgroundColor: "red",
-    marginTop: 40
-  },
+  // ligne3: {
+  //   // backgroundColor: "red",
+  //   marginTop: 40
+  // },
   rectangle: {
     flexDirection: "row",
     width: 330,
@@ -240,20 +255,20 @@ const styles = StyleSheet.create({
     opacity: 0.7,
     justifyContent: "center",
     alignItems: "center"
-  },
-  rectanglesBlancDevine: {
-    backgroundColor: "white",
-    borderRadius: 6,
-    width: 250,
-    height: 25,
-    position: "absolute",
-    top: 40,
-    left: 40,
-    right: 40,
-    opacity: 0.7,
-    justifyContent: "center",
-    alignItems: "center"
   }
+  // rectanglesBlancDevine: {
+  //   backgroundColor: "white",
+  //   borderRadius: 6,
+  //   width: 250,
+  //   height: 25,
+  //   position: "absolute",
+  //   top: 40,
+  //   left: 40,
+  //   right: 40,
+  //   opacity: 0.7,
+  //   justifyContent: "center",
+  //   alignItems: "center"
+  // }
 });
 
 export default HomeScreen;
