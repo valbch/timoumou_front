@@ -1,4 +1,3 @@
-// mettre la bonne typo
 // mettre effet dégradé = https://docs.expo.io/versions/latest/sdk/linear-gradient/
 import React from "react";
 import {
@@ -21,7 +20,7 @@ class HomeScreen extends React.Component {
 
   componentDidMount = async () => {
     await Font.loadAsync({
-      unicorn: require("../../assets/fonts/unicorn.ttf")
+      "Unicorns_are_Awesome-TTF": require("../../assets/fonts/Unicorns_are_Awesome-TTF.ttf")
     });
     this.setState({ fontLoaded: true });
   };
@@ -45,11 +44,12 @@ class HomeScreen extends React.Component {
                 textAlign: "center",
                 justifyContent: "center",
                 marginTop: 70,
-                fontFamily: "unicorn"
+                fontFamily: "Unicorns_are_Awesome-TTF"
               }}
             >
               Les animaux
             </Text>
+
             <View style={styles.category}>
               <View style={styles.ligne1}>
                 <TouchableOpacity
@@ -73,7 +73,10 @@ class HomeScreen extends React.Component {
                       <Text
                         style={{
                           color: "#383b60",
-                          fontSize: 20
+                          fontSize: 20,
+                          // fontFamily: "Unicorns_are_Awesome-TTF",
+                          justifyContent: "center",
+                          flexDirection: "row"
                         }}
                       >
                         Jungle
@@ -244,6 +247,7 @@ const styles = StyleSheet.create({
     borderRadius: 10
   },
   rectanglesBlanc: {
+    flexDirection: "row",
     backgroundColor: "white",
     borderRadius: 6,
     width: 135,

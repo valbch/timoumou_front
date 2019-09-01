@@ -3,6 +3,7 @@ import { createBottomTabNavigator } from "react-navigation";
 import HomeScreen from "./HomeScreen";
 import SettingsScreen from "./SettingsScreen";
 import { Ionicons } from "@expo/vector-icons";
+// import * as Font from "expo-font";
 
 const TabNavigator = createBottomTabNavigator(
   {
@@ -63,7 +64,6 @@ TabNavigator.navigationOptions = ({ navigation }) => {
     },
     headerTitleStyle: {
       color: "#484c7f",
-
       fontSize: 20
     }
   };
